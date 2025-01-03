@@ -12,35 +12,29 @@ public class hanukkahThings {
         return false;
     }
 
-    public static<T> Queue<T> copy(Queue<T> q)
-    {
+    public static <T> Queue<T> copy(Queue<T> q) {
         Queue<T> c = new Queue<>(), a = new Queue<>();
         T n;
-        while(!q.isEmpty())
-        {
-            n=q.remove();
+        while (!q.isEmpty()) {
+            n = q.remove();
             c.insert(n);
             a.insert(n);
         }
-        while(!a.isEmpty())
-        {
+        while (!a.isEmpty()) {
             q.insert(a.remove());
         }
         return c;
     }
 
-    public static<T> void spilledOn(Queue<T> src, Queue<T> dst)
-    {
-        while(!src.isEmpty())
-        {
+    public static <T> void spilledOn(Queue<T> src, Queue<T> dst) {
+        while (!src.isEmpty()) {
             dst.insert(src.remove());
         }
     }
 
-    public static void insertSorted(Queue<Integer> q, int x)
-    {
+    public static void insertSorted(Queue<Integer> q, int x) {
         Queue<Integer> a = new Queue<>();
-        while(!q.isEmpty() && q.head()<x)
+        while (!q.isEmpty() && q.head() < x)
             a.insert(q.remove());
         a.insert(x);
         spilledOn(q, a);
@@ -89,23 +83,20 @@ public class hanukkahThings {
         return false;
     }
 
-    public static void sort(Queue<Integer> q)
-    {
+    public static void sort(Queue<Integer> q) {
         Queue<Integer> w = new Queue<>();
-        while(!q.isEmpty())
-        {
+        while (!q.isEmpty()) {
             insertSorted(w, q.remove());
         }
         spilledOn(w, q);
     }
-    public static int quest6(Queue<Integer> q1, Queue<Integer> q2)
-    {
+
+    public static int quest6(Queue<Integer> q1, Queue<Integer> q2) {
         Queue<Integer> w1 = copy(q1);
         Queue<Integer> w2 = copy(q2);
         sort(w1);
-        while(!w1.isEmpty()&&!w2.isEmpty())
-        {
-            if(!exists(w2, w1.head()))
+        while (!w1.isEmpty() && !w2.isEmpty()) {
+            if (!exists(w2, w1.head()))
                 return w1.remove();
             w1.remove();
         }
@@ -117,22 +108,20 @@ public class hanukkahThings {
             return 0;
         }
 
-        int shortLen = Integer.MAX_VALUE, shortSum = 0, sum=0, len, num;
+        int shortLen = Integer.MAX_VALUE, shortSum = 0, sum = 0, len, num;
 
         Queue<Integer> w = copy(q);
 
-        while(!w.isEmpty())
-        {
+        while (!w.isEmpty()) {
             num = w.remove();
             len = 1;
-            sum+=num;
-            while(!w.isEmpty()&&num<w.head())
-            {
+            sum += num;
+            while (!w.isEmpty() && num < w.head()) {
                 num = w.remove();
                 len++;
-                sum+=num;
+                sum += num;
             }
-            if(len<shortLen) {
+            if (len < shortLen) {
                 shortSum = sum;
                 shortLen = len;
             }
@@ -141,16 +130,13 @@ public class hanukkahThings {
         return shortSum;
     }
 
-    public static void quest10(Queue<Integer> q)
-    {
+    public static void quest10(Queue<Integer> q) {
         Queue<Integer> res = new Queue<>();
         int min;
-        while(!q.isEmpty())
-        {
+        while (!q.isEmpty()) {
             min = q.remove();
-            for(int i = 0; i<2; i++)
-            {
-                if(q.head()<min)
+            for (int i = 0; i < 2; i++) {
+                if (q.head() < min)
                     min = q.head();
                 q.remove();
             }
@@ -159,35 +145,31 @@ public class hanukkahThings {
         spilledOn(res, q);
     }
 
-    public static<T> int numOfRepetitions(Queue<T> q, T x)
-    {
+    public static <T> int numOfRepetitions(Queue<T> q, T x) {
         int c = 0;
         Queue<T> w = copy(q);
-        while(!w.isEmpty())
-        {
-            if(w.head()==x)
+        while (!w.isEmpty()) {
+            if (w.head() == x)
                 c++;
             w.remove();
         }
         return c;
     }
-    public static<T> void removeRepetitions(Queue<T> q, T x)
-    {
+
+    public static <T> void removeRepetitions(Queue<T> q, T x) {
         Queue<T> w = new Queue<>();
-        while(!q.isEmpty())
-        {
-            if(q.head()!=x)
+        while (!q.isEmpty()) {
+            if (q.head() != x)
                 w.insert(q.head());
             q.remove();
         }
         spilledOn(w, q);
     }
-    public static Queue<Integer> quest12(Queue<Integer> q)
-    {
+
+    public static Queue<Integer> quest12(Queue<Integer> q) {
         Queue<Integer> w = copy(q), res = new Queue<>();
         int n;
-        while(!w.isEmpty())
-        {
+        while (!w.isEmpty()) {
             n = w.remove();
             res.insert(n);
             res.insert(numOfRepetitions(q, n));
